@@ -1,3 +1,6 @@
+# build cmd
+docker build -t jivanjangid/streamx-relay .
+
 # nginx-rtmps
 Docker image for Nginx + Stunnel to enable streaming to multiple RTMP(S) services. This was created to allow OBS Streaming to multiple services, including Facebook which requires RTMPS.
 
