@@ -1,5 +1,12 @@
 #!/bin/sh
 STUN_PORT=1936
+API_HOST=${INJEST_API_HOST}
+
+if [ "x${API_HOST}" = "x" ]; then
+    API="false"
+else
+    API="true"
+fi
 
 genStunnelConf() {
   echo "[$1]"
@@ -23,6 +30,14 @@ genNginxConf() {
   echo "        application $LOCAL_STREAM {"
   echo "            live on;"
   echo "            record off;"
+  echo "            deny play all;"
+  if [ "${API}" = "true" ]; then
+  echo "            on_publish ${API_HOST}/on_publish?uid=${UID};"
+  echo "            on_done ${API_HOST}/on_done?uid=${UID};"
+  echo "            exec_publish curl ${API_HOST}/exec_publish?uid=${UID};"
+  echo "            exec_publish_done curl ${API_HOST}/exec_publish_done?uid=${UID};"
+    API="false"
+  fi
   echo ""
   for U in $@; do
   echo "            push $U;"

@@ -58,7 +58,8 @@ RUN apk update &&		\
 		libstdc++ 		\
 		ca-certificates \
 		pcre 			\
-		stunnel
+		stunnel			\
+		curl
 
 COPY --from=builder /usr/local/nginx /usr/local/nginx
 COPY entrypoint.sh /
