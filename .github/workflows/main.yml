@@ -34,4 +34,4 @@ jobs:
           push: true
           tags: |
             uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:latest
-            uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:v1
+            uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:v2

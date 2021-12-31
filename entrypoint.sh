@@ -1,11 +1,19 @@
 #!/bin/sh
 STUN_PORT=1936
-API_HOST=${INJEST_API_HOST}
+API_HOST=${NGINX_RTMP_CTL_API_HOST}
+UID=${UID-None}
+DENY_PULL=${DENY_PULL}
 
 if [ "x${API_HOST}" = "x" ]; then
     API="false"
 else
     API="true"
+fi
+
+if [ "x${API_HOST}" = "x" ]; then
+    DENY_PULL_BOOL="false"
+else
+    DENY_PULL_BOOL="true"
 fi
 
 genStunnelConf() {
@@ -30,7 +38,11 @@ genNginxConf() {
   echo "        application $LOCAL_STREAM {"
   echo "            live on;"
   echo "            record off;"
+  if [ "${DENY_PULL_BOOL}" = "true" ]; then
   echo "            deny play all;"
+  DENY_PULL_BOOL="false"
+  fi
+
   if [ "${API}" = "true" ]; then
   echo "            on_publish ${API_HOST}/on_publish?uid=${UID};"
   echo "            on_done ${API_HOST}/on_done?uid=${UID};"
