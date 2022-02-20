@@ -1,16 +1,16 @@
 #!/bin/sh
 STUN_PORT=1936
-API_HOST=${NGINX_RTMP_CTL_API_HOST}
+NGINX_RTMP_CTL_API_HOST=${NGINX_RTMP_CTL_NGINX_RTMP_CTL_API_HOST}
 UID=${UID-None}
 DENY_PULL=${DENY_PULL}
 
-if [ "x${API_HOST}" = "x" ]; then
+if [ "x${NGINX_RTMP_CTL_API_HOST}" = "x" ]; then
     API="false"
 else
     API="true"
 fi
 
-if [ "x${API_HOST}" = "x" ]; then
+if [ "x${NGINX_RTMP_CTL_API_HOST}" = "x" ]; then
     DENY_PULL_BOOL="false"
 else
     DENY_PULL_BOOL="true"
@@ -44,10 +44,10 @@ genNginxConf() {
   fi
 
   if [ "${API}" = "true" ]; then
-  echo "            on_publish ${API_HOST}/on_publish?uid=${UID};"
-  echo "            on_done ${API_HOST}/on_done?uid=${UID};"
-  echo "            exec_publish curl ${API_HOST}/exec_publish?uid=${UID};"
-  echo "            exec_publish_done curl ${API_HOST}/exec_publish_done?uid=${UID};"
+  echo "            on_publish ${NGINX_RTMP_CTL_API_HOST}/on_publish?uid=${UID};"
+  echo "            on_done ${NGINX_RTMP_CTL_API_HOST}/on_done?uid=${UID};"
+  echo "            exec_publish curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish?uid=${UID};"
+  echo "            exec_publish_done curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish_done?uid=${UID};"
     API="false"
   fi
   echo ""
