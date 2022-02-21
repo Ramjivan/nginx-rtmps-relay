@@ -38,10 +38,10 @@ genNginxConf() {
   DENY_PULL_BOOL="false"
   fi
   
-  echo "            on_publish http://alnr:8000/on_publish;"
-  echo "            on_done http://alnr:8000/on_done;"
-  echo "            exec_publish curl http://alnr:8000/exec_publish;"
-  echo "            exec_publish_done curl http://127.0.0.1:8334/exec_publish_done;"
+  echo "            on_publish ${NGINX_RTMP_CTL_API_HOST}/on_publish;"
+  echo "            on_done ${NGINX_RTMP_CTL_API_HOST}/on_done;"
+  echo "            exec_publish curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish;"
+  echo "            exec_publish_done curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish_done;"
 
   echo ""
   for U in $@; do
