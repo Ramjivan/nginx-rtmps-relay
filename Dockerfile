@@ -1,7 +1,6 @@
 
 FROM alpine:latest as builder
 LABEL stage=builder
-MAINTAINER Insik Park <parki@insikpark.com>
 
 ARG NGINX_VERSION=1.19.2
 ARG NGINX_RTMP_VERSION=1.2.1

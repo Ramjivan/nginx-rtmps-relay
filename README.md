@@ -11,8 +11,12 @@ uk-london-1.ocir.io/lrqqxehccngb/streamway-injest:v1
 # nginx-rtmps
 Docker image for Nginx + Stunnel to enable streaming to multiple RTMP(S) services. This was created to allow OBS Streaming to multiple services, including Facebook which requires RTMPS.
 
+# extention 
+entrypoint.sh is further extended to add authentication and more events like on_done exec_publish
+
+
 # Quick Start
-The image requires the following environment variables to be set.
+The image requires the following environment variables to be set and all are mendatory. 
 
 * PORT - port number that NGINX will listen on for RTMP stream. This should normalily be set to 1935.
 ```
@@ -25,8 +29,6 @@ STREAMS="rtmp://a.rtmp.youtube.com/live2/[put_your_key_here] rtmps://live-api-s.
 ```
 
 * LOCAL_STREAM - name of the local stream that OBS will point to. This value is arbitrary and you just need to ensure that this name matches what you entered into OBS.
-```
-LOCAL_STREAM=[name_of_your_local_stream]
 ```
 
 * NGINX_RTMP_CTL_API_HOST - api endpoint for auth apis - on_publish, on_done, exec_on_publish, exec_on_publish_done.
