@@ -33,5 +33,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:latest
-            uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:v2
+            uk-london-1.ocir.io/lrqqxehccngb/streamway-relay:v1
