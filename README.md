@@ -49,8 +49,12 @@ rtmp://[your container IP address]:[port]/[name_of_your_local_stream]
 Changlog
 V1 - restreaming with stunnal forked from parki/nginx-rtmps[https://github.com/parki/nginx-rtmps]
      requires at least one destination url to push to
-
-V2 - added optional auth with env  NGINX_RTMP_CTL_API_HOST 
-     added optional UID query parameter in every request like on_publish & on_done
      added optional DENY_PULL_BOOL to deny all play or pull requests from container, makeing it truly push only relay
      any non empty string value assigned to DENY_PULL_BOOL will make it true [not a boolean actually] 
+
+V2 - added required UID query parameter in every request like on_publish & on_done
+     added required NGINX_RTMP_CTL_API_HOST env var
+     added exec_on_publish & exec_on_publish_done [to indicate stream health]
+     added optional auth with on_publsih & on_done
+     
+
