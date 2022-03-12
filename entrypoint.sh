@@ -39,7 +39,7 @@ genNginxConf() {
   echo "    location /on_publish {"
   echo "      proxy_buffering off;"
   echo "      proxy_set_header X-UID ${UID};"
-  echo "      proxy_set_header X-Auth_token ${AUTH_TOKEN};"
+  echo "      proxy_set_header X-Auth-token ${AUTH_TOKEN};"
   echo "      proxy_pass ${NGINX_RTMP_CTL_API_HOST}/on_publish;"
 echo "      }"
   echo "    location /on_done {"
