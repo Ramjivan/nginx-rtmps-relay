@@ -4,6 +4,7 @@ NGINX_RTMP_CTL_API_HOST=${NGINX_RTMP_CTL_API_HOST}
 UID=${UID-None}
 DENY_PULL=${DENY_PULL}
 ON_PUBLISH_AUTH=${ON_PUBLISH_AUTH}
+AUTH_TOKEN=${AUTH_TOKEN}
 
 if [ "x${DENY_PULL}" = "x" ]; then
     DENY_PULL_BOOL="false"
@@ -31,6 +32,37 @@ genNginxConf() {
   echo "worker_processes auto;"
   echo "rtmp_auto_push on;"
   echo "events {}"
+  echo "http {"
+  echo "  server {"
+  echo "    listen 8334;"
+  echo "    server_name 127.0.0.1;"
+  echo "    location /on_publish {"
+  echo "      proxy_buffering off;"
+  echo "      proxy_set_header X-UID ${UID};"
+  echo "      proxy_set_header X-Auth_token ${AUTH_TOKEN};"
+  echo "      proxy_pass ${NGINX_RTMP_CTL_API_HOST}/on_publish;"
+echo "      }"
+  echo "    location /on_done {"
+  echo "      proxy_buffering off;"
+  echo "      proxy_set_header X-UID ${UID};"
+  echo "      proxy_set_header X-Auth_token ${AUTH_TOKEN};"
+  echo "      proxy_pass ${NGINX_RTMP_CTL_API_HOST}/on_done;"
+echo "      }"
+echo "    location /exec_publish {"
+  echo "      proxy_buffering off;"
+  echo "      proxy_set_header X-UID ${UID};"
+  echo "      proxy_set_header X-Auth_token ${AUTH_TOKEN};"
+  echo "      proxy_pass ${NGINX_RTMP_CTL_API_HOST}/exec_publish;"
+echo "      }"
+echo "    location /exec_publish_done {"
+  echo "      proxy_buffering off;"
+  echo "      proxy_set_header X-UID ${UID};"
+  echo "      proxy_set_header X-Auth_token ${AUTH_TOKEN};"
+  echo "      proxy_pass ${NGINX_RTMP_CTL_API_HOST}/exec_publish_done;"
+echo "      }"
+
+  echo "  }"
+  echo "}"
   echo "rtmp {"
   echo "    server {"
   echo "        listen $PORT;"
@@ -43,14 +75,13 @@ genNginxConf() {
   echo "            deny play all;"
   DENY_PULL_BOOL="false"
   fi
-  if [ "${DENY_PULL_BOOL}" = "true" ]; then
-  echo "            #on_publish ${NGINX_RTMP_CTL_API_HOST}/on_publish;"
-  echo "            #on_done ${NGINX_RTMP_CTL_API_HOST}/on_done;"
-  DENY_PULL_BOOL="false"
+  if [ "${ON_PUBLISH_AUTH_BOOL}" = "true" ]; then
+  echo "            on_publish http://127.0.0.1:8334/on_publish;"
+  echo "            on_done http://127.0.0.1:8334/on_done;"
+  ON_PUBLISH_AUTH_BOOL="false"
   fi
-  echo "            exec_publish curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish;"
-  echo "            exec_publish_done curl ${NGINX_RTMP_CTL_API_HOST}/exec_publish_done;"
-
+  echo "            exec_publish curl http://127.0.0.1:8334/exec_publish;"
+  echo "            exec_publish_done curl http://127.0.0.1:8334/exec_publish_done;"
   echo ""
   for U in $@; do
   echo "            push $U;"
